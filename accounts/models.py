@@ -8,9 +8,7 @@ class Benutzer(AbstractUser):
     """
     Erweiterte Benutzerklasse mit benutzerdefinierten Attributen
     """
-    vorname = models.CharField(max_length=50, verbose_name='Vorname')
-    nachname = models.CharField(max_length=50, verbose_name='Nachname')
-    email = models.EmailField(unique=True, verbose_name='E-Mail')
+    
     ist_admin = models.BooleanField(
         default=False,
         verbose_name='Ist Admin',
@@ -24,11 +22,5 @@ class Benutzer(AbstractUser):
         ordering = ['erstellt_am']
     
     def __str__(self):
-        return f"{self.vorname} {self.nachname}"
+        return f"{self.erstellt_am} Ein neuer Benutzer. Ist Admin? {self.ist_admin}"
     
-    def passwort_generieren(self):
-        """
-        Generiert ein zufälliges Passwort mit einer Länge von 8 Zeichen.
-        """
-        passwort =  string.ascii_letters + string.digits
-        return ''.join(secrets.choice(passwort) for _ in range(8))
