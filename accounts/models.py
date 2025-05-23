@@ -22,5 +22,5 @@ class Benutzer(AbstractUser):
         ordering = ['erstellt_am']
     
     def __str__(self):
-        return f"{self.erstellt_am} Ein neuer Benutzer. Ist Admin? {self.ist_admin}"
+        return f"Ist Admin: {self.ist_admin} | Erstellt am: {self.erstellt_am}"
     
