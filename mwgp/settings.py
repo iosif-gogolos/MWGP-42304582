@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "digitaler_putzplan",
+    "accounts",
+    "reinigung",
+    "kalender",
+   
 ]
 
 MIDDLEWARE = [
