@@ -1,6 +1,9 @@
 from django.contrib import admin
 
-from .models import WG, MitbewohnerProfil, Raum, Reinigungsaufgabe, Putzplan, Kalendereintrag, AufgabenStatus
+from .models import (
+    WG, MitbewohnerProfil, Raum, Reinigungsaufgabe, 
+    Putzplan, Kalendereintrag, AufgabenStatus
+)
 
 # Register your models here.
 
