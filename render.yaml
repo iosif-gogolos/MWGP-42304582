@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: mwgp
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn mwgp.wsgi:application"
+    envVars:
+      - key: DATABASE_URL
+        value: sqlite:///db.sqlite3
+      - key: RENDER
+        value: true
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: EMAIL_HOST_USER
+        sync: false
+      - key: EMAIL_HOST_PASSWORD
+        sync: false
