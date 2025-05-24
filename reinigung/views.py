@@ -10,11 +10,20 @@ from .models import (
 )
 from accounts.models import Benutzer
 
-@login_required
+def landing_page(request):
+    """
+    Öffentliche Langing-Page für MWGP
+    """
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+    return render(request, 'reinigung/landing.html')
+
+@login_required #Dekorator für Authentifizierung
 def dashboard(request):
     """
     Hauptansicht - Kalenderübersicht mit Putzplan
     """
+    
     # Ermittlung der WG des Benutzers unter Fehlerbehandlung
     wg = None
     putzplan = None

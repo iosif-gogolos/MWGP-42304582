@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}MWGP - Willkommen{% endblock %}
+{% block header_title %}Willkommen bei MWGP{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1 class="display-4">WG-Putzplan</h1>
+            <p class="lead">Die einfache Lösung für ein sauberes Zusammenleben!</p>
+            
+            <div class="mt-5">
+                <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Jetzt anmelden</a>
+            </div>
+            
+            <div class="row mt-5">
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h3>Einfach</h3>
+                            <p>Klare Übersicht aller anstehenden Aufgaben</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h3>Übersichtlich</h3>
+                            <p>Auf einen Blick erkennen, wer wann dran ist</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h3>Fair</h3>
+                            <p>Gerechte Aufteilung aller Reinigungsarbeiten</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
