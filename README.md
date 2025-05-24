@@ -117,7 +117,8 @@ Die Anwendung wird mit folgenden Test-Mitbewohnern geladen:
 - **Lisa Mustermitbewohnerin** (lisa.mustermann@example.com)
 
 ### Zur Überprüfung und zum bewerten
-- **Thorsten Froehlich** (iu-admin@mwgp.de) - Admin
+- Benutzername: iu-admin@mwgp.de
+- Passwort: iu-admin-12345
 
 ## Kalender-Funktionalität
 

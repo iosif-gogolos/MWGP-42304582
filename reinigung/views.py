@@ -40,18 +40,18 @@ def dashboard(request):
     # Kalender-Daten für die nächsten 5 Sonntage (2 vergangen, 1 aktuell, 2 zukünftig)
     heute = timezone.now().date()
     
-    # Berechnung der Sonntage
     sonntage = []
     aktueller_sonntag = heute - timedelta(days=heute.weekday() + 1) # Letzter Sonntag
+    naechster_sonntag = aktueller_sonntag + timedelta(days=7) # Nächster Sonntag
     
     for i in range(-2, 3):  # -2 bis +2 Wochen
         sonntag = aktueller_sonntag + timedelta(weeks=i)
         
-        # Status bestimmen
+        # Status bestimmen - angepasste Logik für genau einen "upcoming"-Sonntag
         if sonntag < heute:
             status = 'past'
-        elif sonntag <= heute + timedelta(days=7):
-            status = 'upcoming'
+        elif sonntag == naechster_sonntag:
+            status = 'upcoming'  # Nur der nächste Sonntag ist "upcoming"
         else:
             status = 'future'
         
@@ -65,7 +65,7 @@ def dashboard(request):
             ist_erledigt = eintrag.ist_beendet if eintrag else False
         except Kalendereintrag.DoesNotExist:
             # Dummy-Daten für Demo
-            dummy_namen = ['Thorsten', 'Max', 'Lisa']
+            dummy_namen = ['Matthias', 'Max', 'Lisa']
             mitbewohner_name = dummy_namen[i % len(dummy_namen)]
             ist_erledigt = status == 'past'
             eintrag = None

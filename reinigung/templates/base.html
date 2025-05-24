@@ -1,4 +1,3 @@
-<!-- templates/base.html -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="de">
@@ -7,10 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}MWGP - WG-Putzplan{% endblock %}</title>
     
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    <!-- Eigenes CSS -->
     <style>
         :root {
             --background: #F2EFE7;
@@ -34,7 +31,12 @@
             padding: 1rem;
         }
 
-        header h1, footer p {
+        header h1{
+            margin: 0;
+            font-size: 2rem;
+        }
+        
+        footer p {
             margin: 0;
         }
 
@@ -42,7 +44,6 @@
             padding: 1rem;
         }
 
-        /* Kalenderübersicht */
         .calendar-overview {
             display: flex;
             flex-wrap: wrap;
@@ -78,17 +79,18 @@
             color: var(--accent);
         }
 
-        /* Vergangene Aufgaben: abgedunkelter Hintergrund */
         .calendar-tile.past {
             background-color: #ccc;
         }
 
-        /* Kommende Aufgaben: lebendige Farbe */
         .calendar-tile.upcoming {
             background-color: var(--secondary);
         }
 
-        /* Reinigungsaufgaben Checkliste */
+        .calendar-tile.future {
+            background-color: var(--primary);
+        }
+
         .cleaning-tasks {
             margin-top: 2rem;
             padding: 1rem;
