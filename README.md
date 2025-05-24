@@ -100,7 +100,7 @@ python manage.py runserver
 **Admin-Login Daten:**
 - **Benutzername**: `iu-admin@mwgp.de`
 - **Passwort**: `iu-admin-12345`
-- **Name**: Thorsten Froehlich
+- **Email**: iosif.gogolos@iu-study.org (dient dazu das Passwort zurückzusetzen)
 
 ### 5. Browser-Test
 
