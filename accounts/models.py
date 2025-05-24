@@ -6,8 +6,11 @@ import string
 # Create your models here.
 class Benutzer(AbstractUser):
     """
-    Erweiterte Benutzerklasse mit benutzerdefinierten Attributen
+    Erweiterte Benutzerklasse mit benutzerdefinierten Attributen (Vererbung)
     """
+    vorname = models.CharField(max_length=150, blank=True)
+    nachname = models.CharField(max_length=150, blank=True)
+    erst_anmeldung = models.BooleanField(default=False)
     
     ist_admin = models.BooleanField(
         default=False,
@@ -22,5 +25,13 @@ class Benutzer(AbstractUser):
         ordering = ['erstellt_am']
     
     def __str__(self):
-        return f"Ist Admin: {self.ist_admin} | Erstellt am: {self.erstellt_am}"
+        return f"{self.vorname} {self.nachname}"
+    
+    def save(self, *args, **kwargs):
+        # Mapping von Django's default Feldern zu den deutschen Feldnamen
+        if not self.vorname and self.first_name:
+            self.vorname = self.first_name
+        if not self.nachname and self.last_name:
+            self.nachname = self.last_name
+        super().save(*args, **kwargs)
     

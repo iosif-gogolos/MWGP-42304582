@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - MWGP{% endblock %}
+{% block header_title %}MWGP - Anmeldung{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="text-center">Anmelden</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="email" class="form-label">E-Mail</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Passwort</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Anmelden</button>
+                </form>
+                
+                <hr>
+                <div class="text-center">
+                    <small class="text-muted">
+                        Demo-Login:<br>
+                        <strong>iu-admin@mwgp.de</strong><br>
+                        <strong>iu-admin-12345</strong>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

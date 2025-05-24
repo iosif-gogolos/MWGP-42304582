@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Admin Willkommensnachricht Modal -->
+{% if zeige_admin_modal %}
+<div class="modal fade" id="adminWelcomeModal" tabindex="-1" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Willkommen, Admin!</h5>
+            </div>
+            <div class="modal-body">
+                <p>Hallo <strong>{{ benutzer_name }}</strong>!</p>
+                <p>Derzeit sind nur <strong>Dummy-Daten</strong> (Max Mustermitbewohner und Lisa Mustermitbewohnerin) in der WG eingetragen.</p>
+                <p>Möchten Sie Ihren ersten echten Mitbewohner anlegen?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="dismissAdminModal()">Später</button>
+                <a href="{% url 'create_user' %}" class="btn btn-primary">Mitbewohner anlegen</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Kalenderübersicht -->
+<div class="calendar-overview">
+    {% for sonntag in sonntage %}
+    <div class="calendar-tile {{ sonntag.status }}">
+        <span class="date">{{ sonntag.datum|date:"d.m.Y" }}</span>
+        <span class="member">{{ sonntag.mitbewohner }}</span>
+        {% if sonntag.ist_erledigt %}
+            <span class="status">&#10004;</span>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Reinigungsaufgaben Checkliste -->
+<section class="cleaning-tasks">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Reinigungsaufgaben:</h2>
+        <button type="button" class="btn btn-success" onclick="putztagBeenden()">
+            Putztag beenden
+        </button>
+    </div>
+
+    {% for raum, aufgaben in aufgaben_nach_raum.items %}
+    <div class="task-category">
+        <h3>{{ raum }}:</h3>
+        <ul>
+            {% for aufgabe in aufgaben %}
+            <li>
+                <input type="checkbox" 
+                       id="task-{{ aufgabe.id }}" 
+                       {% if aufgabe.ist_erledigt %}checked{% endif %}
+                       onchange="aufgabeAbhaken({{ aufgabe.id }}, this.checked)">
+                <label for="task-{{ aufgabe.id }}">{{ aufgabe.bezeichnung }}</label>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Admin Modal beim Laden anzeigen
+{% if zeige_admin_modal %}
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = new bootstrap.Modal(document.getElementById('adminWelcomeModal'));
+    modal.show();
+});
+{% endif %}
+
+// Admin Modal schließen
+function dismissAdminModal() {
+    fetch('{% url "admin_welcome_dismiss" %}', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrfToken,
+            'Content-Type': 'application/json',
+        },
+    });
+    bootstrap.Modal.getInstance(document.getElementById('adminWelcomeModal')).hide();
+}
+
+// Aufgabe abhaken
+function aufgabeAbhaken(aufgabenId, istErledigt) {
+    fetch('{% url "aufgabe_abhaken" %}', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrfToken,
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `aufgaben_id=${aufgabenId}&ist_erledigt=${istErledigt}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (!data.success) {
+            alert('Fehler beim Speichern der Aufgabe: ' + (data.error || 'Unbekannter Fehler'));
+            // Checkbox zurücksetzen
+            document.getElementById(`task-${aufgabenId}`).checked = !istErledigt;
+        }
+    })
+    .catch(error => {
+        console.error('Fehler:', error);
+        alert('Netzwerkfehler beim Speichern der Aufgabe');
+        // Checkbox zurücksetzen
+        document.getElementById(`task-${aufgabenId}`).checked = !istErledigt;
+    });
+}
+
+// Putztag beenden
+function putztagBeenden() {
+    if (confirm('Möchten Sie den Putztag wirklich als beendet markieren?')) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '{% url "putztag_beenden" %}';
+        
+        const csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = 'csrfmiddlewaretoken';
+        csrfInput.value = csrfToken;
+        form.appendChild(csrfInput);
+        
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+</script>
+{% endblock %}
