@@ -34,6 +34,28 @@
                         <strong>Automatische Passwort-Generierung:</strong><br>
                         Das System generiert automatisch ein sicheres Passwort und sendet es an die angegebene E-Mail-Adresse.
                     </div>
+
+                    <div class="mb-3">
+                            <label class="form-label">Generiertes Passwort</label>
+                            <div class="input-group">
+                                <input type="text" 
+                                       id="generatedPassword" 
+                                       class="form-control" 
+                                       readonly 
+                                       value="{{ initial_password }}"
+                                       style="background-color: #fff;">
+                                <button class="btn btn-outline-secondary" type="button" id="regeneratePassword">
+                                        <i class="fas fa-sync-alt"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary" id="copyPassword">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <small class="text-muted">Dieses Passwort wird automatisch an den Benutzer per E-Mail gesendet.</small>
+                    </div>
+
+                    <input type="hidden" name="generated_password" id="hiddenPassword" value="{{ initial_password }}">
+                
                     
                     <div class="d-flex gap-2">
                         <button type="submit" class="btn btn-primary">Mitbewohner erstellen</button>

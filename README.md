@@ -12,7 +12,7 @@ Repository für die Entwicklung der responsiven Web-Anwendung "Mein-WG-Putzplan"
 - **Frontend**: HTML, CSS, Bootstrap, JavaScript
 - **Version Control**: Git/GitHub
 - **Hosting**: Render
-- **Virtuelle Umgebung**: Python venv
+- **Virtuelle Umgebung**: Python (venv)
 
 ## Technische Voraussetzungen
 
